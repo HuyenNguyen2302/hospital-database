@@ -1,0 +1,69 @@
+Doctor(doctor_ID, firstName, lastName, gender, specialty)
+
+Examine(doctor_ID, admission_ID, result)
+
+FOREIGN KEY Examine(doctor_ID) REFERENCES Doctor(doctor_ID)
+
+Admission(admission_ID, patient_SSN, leaveTime, admissionTime, totalPayment, insuranceCoverage)
+
+Patient(patient_SSN, firstName, lastName, address, telephoneNo)
+
+FOREIGN KEY Admission(patient_SSN) REFERENCES Patient(patient_SSN)
+
+AdmissionFutureVisit(admission_ID, futureVisits)
+
+FOREIGN KEY AdmissionFutureVisit(admission_ID) REFERENCES Admission(admission_ID)
+
+StayIn(admission_ID, roomNo, startDate, endDate)
+
+Room(roomNo, occupied)
+
+FOREIGN KEY StayIn(admission_ID) REFERENCES Admission(admission_ID)
+
+FOREIGN KEY stayIn(roomNo) REFERENCES Room(roomNo)
+
+RoomServices(roomNo, services)
+
+FOREIGN KEY RoomServices(roomNo) REFERENCES Room(roomNo)
+
+Unit(serialNo, roomNo, typeOfEquipment_ID, yearOfPurchase, lastInspectionTime)
+
+TypeOfEquipment(typeOfEquipment_ID, description, model, operationalInstruction)
+
+FOREIGN KEY Unit(roomNo) REFERENCES Room(roomNo)
+
+FOREIGN KEY Unit(typeOfEquipment_ID) REFERENCES
+TypeOfEquipment(typeOfEquipment_ID)
+
+Access(employee_ID,roomNo)
+
+FOREIGN KEY Access(employee_ID) REFERENCES Employee(employee_ID)
+
+Employee(employee_ID, firstName, lastName, jobTitle, salary, officeNo)
+
+RegularEmployee(employee_ID, divisionManager_ID)
+
+FOREIGN KEY RegularEmployee(DivisionManager_ID) REFERENCES DivisionManager(employee_ID)
+
+DivisionManager(employee_ID, generalManager_ID)
+
+FOREIGN KEY DivisionManager(GeneralManager_ID) REFERENCE GeneralManager(employee_ID)
+
+GeneralManager(employee_ID)
+
+
+
+
+
+
+
+Assumptions:
+- A unit must be in at most 1 room
+- One room can be accessed by multiple employees
+- One patient in one admission can be examined by multiple doctors
+- One doctor can examine many patients
+- One patient can have many admissions
+- In one admission a patient can stay in multiple rooms
+- A single room can have multiple patients
+- Each admission has a unique ID
+- The types of employee are partial and disjoint.
